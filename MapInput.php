@@ -30,8 +30,9 @@ class MapInput extends InputWidget{
      */
     public $service = 'google';
     /**
-     * @var string google api key
+     * @var string api key
      * @see https://developers.google.com/maps/documentation/javascript/get-api-key
+     * @see https://developer.tech.yandex.ru/services/3
      */
     public $apiKey;
     /**
@@ -166,6 +167,7 @@ class MapInput extends InputWidget{
         $mapId = $this->id;
         $options = $this->getMapJsOptions();
         if($this->service == 'yandex'){
+            MapYandexAsset::$apiKey = $this->apiKey;
             MapYandexAsset::$language = $this->getMapLanguage();
             MapYandexAsset::register($view);
             $view->registerJs("

@@ -13,6 +13,11 @@ class MapYandexAsset extends AssetBundle{
      */
     public static $language = 'en_US';
     /**
+     * @var string yandex maps api key
+     * @see https://developer.tech.yandex.ru/services/3
+     */
+    public static $apiKey;
+    /**
      * @var string yandex map api version
      */
     public static $version = '2.1';
@@ -48,9 +53,15 @@ class MapYandexAsset extends AssetBundle{
      */
     protected function getMapLibrary(){
         $libraryUrl = $this->serviceUrl.'/'.self::$version.'/?';
-        $libraryUrl .= http_build_query([
-            'lang' => self::$language,
-        ]);
+
+        $queryData = [
+            'lang' => self::$language
+        ];
+        if (!empty(self::$apiKey)) {
+            $queryData['apikey'] = self::$apiKey;
+        }
+
+        $libraryUrl .= http_build_query($queryData);
         return $libraryUrl;
     }
 }
